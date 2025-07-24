@@ -1319,6 +1319,9 @@ class Bore(Test):
 
         # zet de data om in een dataframe, dan kunnen we er wat mee
         self.soillayers['veld'] = self.soillayers['veld'].rstrip("\n") # remove possible end of line characters that give error
+        
+        # check if all fields in the borehole description have the same length
+        # if they do not have the same length, add column separators to have equal amount of column separators in every row
         if not self._has_equal_borehole_fields():
             self._fill_description_fields()
         self.soillayers['veld'] = pd.read_csv(StringIO(self.soillayers['veld']), sep=self.columnseparator, skipinitialspace=True, header=None)
@@ -1351,6 +1354,8 @@ class Bore(Test):
         soillayers_split = [line.split(self.columnseparator) for line in self.soillayers['veld'].split("\n")]
         lengths = [len(line) for line in soillayers_split]
         max_length = max(lengths)
+        # check if all rows in the borehole have the same amount of fields as the maximum length row
+        # if not all rows have the the same amount of fields as the maximum, they need to be filled to the maximum amount for parsing
         return all(l == max_length for l in lengths)
 
     def _fill_description_fields(self):
