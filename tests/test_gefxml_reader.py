@@ -55,7 +55,8 @@ class TestGefXmlReader:
         print(bore.analyses)
         print(bore.complex_analyses)
         assert True
-        def test_borehole_non_equal_description_field(self):
+    
+    def test_borehole_non_equal_description_field(self):
         # Get path to test boreholes
         boreholes_path = Path(__file__).parent / "borehole-files"
 
